@@ -1,5 +1,6 @@
 import requests
 
+
 EXCLUDE_BLOCKS = {
     " Блок 20",
     " Блок 20.",
@@ -17,16 +18,16 @@ EXCLUDE_ROWS = {
     " Блок 19": 1,
 }
 
-URL = "https://api.eventim.com/seatmap/api/SeatMapHandler?smcVersion=v5.2&version=v5.2.2-1&cType=TDLREST&cId=1101&evId=1192163&key=&a_ts=1583855203700&a_SystemID=17&a_TDLToken=2F095E852F6B6B6B5F6B6B6B38A01D02636B626B057084165F4DD841B03D4D1239B1E57FA74CF4A02D8AC67AAE370A8EB069FD3184950205A62A8DB29F0B945242BFA0E2D09823EC&a_PromotionID=0&fun=json&areaId=0"
+URL = "https://api.eventim.com/seatmap/api/SeatMapHandler?smcVersion=v5.2&version=v5.2.2-1&cType=TDLREST&cId=1101&evId=1192163&key=&a_ts=1583880707473&a_SystemID=17&a_TDLToken=2F095E852F6B6B6B5F6B6B6B38A01D02636B626B057084165F4DD841B03D4D1239B1E57FA74CF4A02D8AC67AAE370A8EB069FD3184950205A62A8DB29F0B945242BFA0E2D09823EC&a_PromotionID=0&fun=json&areaId=0"
 
 r = requests.get(URL)
 data = r.json()
 
 sectors = {
-    "STRABAG" : [0, 0, 0],
-    "Сектор Б": [0, 0, 0],
-    "Сектор В": [0, 0, 0],
-    "Сектор Г": [0, 0, 0]
+    "STRABAG" : [0, 0],
+    "Сектор Б": [0, 0],
+    "Сектор В": [0, 0],
+    "Сектор Г": [0, 0]
 }
 
 
@@ -36,7 +37,6 @@ def populate_sector(sector_name, available, reserved):
 
     sectors[sector_name][0] += reserved
     sectors[sector_name][1] += available
-    sectors[sector_name][2] += available + reserved
 
 
 for block in data["blocks"]:
@@ -71,6 +71,13 @@ for block in data["blocks"]:
 
     populate_sector(sector_name, available, reserved)
 
-
+total_reserved = 0
+total_available = 0
 for sector_name, counts in sorted(sectors.items()):
-    print("{}, Продадени: {}, Свободни: {}, Общо:{}".format(sector_name, counts[0], counts[1], counts[2]))
+    sector_name = "Сектор А" if sector_name == "STRABAG" else sector_name
+    total_reserved += counts[0]
+    total_available += counts[1]
+    print("{}, Продадени: {}, Свободни: {}, Общо:{}".format(sector_name, counts[0], counts[1], counts[0] + counts[1]))
+
+print("Общо Продадени: {}, Свободни: {}, Общо:{}".format(total_reserved, total_available, total_reserved + total_available))
+
