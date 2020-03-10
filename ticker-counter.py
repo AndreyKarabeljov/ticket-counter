@@ -2,8 +2,10 @@ import requests
 
 EXCLUDE_BLOCKS = {
     " Блок 20",
+    " Блок 20.",
     " Блок 23",
-    " Блок 25",
+    #" Блок 25",
+    # " Блок 26",
 }
 
 # Exclude all the rows less or equals to the specified.
@@ -15,7 +17,7 @@ EXCLUDE_ROWS = {
     " Блок 19": 1,
 }
 
-URL = "https://api.eventim.com/seatmap/api/SeatMapHandler?smcVersion=v5.2&version=v5.2.2-1&cType=TDLREST&cId=1101&evId=1189670&key=&a_ts=1583349357314&a_SystemID=17&a_TDLToken=2F095E852F6B6B6B5F6B6B6B38A01D02636B626B057084165F4DD841B03D4D1239B1E57FA74CF4A02D8AC67AAE370A8EB069FD3184950205A62A8DB29F0B945242BFA0E2D09823EC&a_PromotionID=0&fun=json&areaId=0"
+URL = "https://api.eventim.com/seatmap/api/SeatMapHandler?smcVersion=v5.2&version=v5.2.2-1&cType=TDLREST&cId=1101&evId=1192163&key=&a_ts=1583855203700&a_SystemID=17&a_TDLToken=2F095E852F6B6B6B5F6B6B6B38A01D02636B626B057084165F4DD841B03D4D1239B1E57FA74CF4A02D8AC67AAE370A8EB069FD3184950205A62A8DB29F0B945242BFA0E2D09823EC&a_PromotionID=0&fun=json&areaId=0"
 
 r = requests.get(URL)
 data = r.json()
@@ -24,7 +26,7 @@ sectors = {
     "STRABAG" : [0, 0, 0],
     "Сектор Б": [0, 0, 0],
     "Сектор В": [0, 0, 0],
-    #"Сектор Г": [0, 0, 0]
+    "Сектор Г": [0, 0, 0]
 }
 
 
@@ -49,6 +51,7 @@ for block in data["blocks"]:
 
     # Sort the rows by seat number so the lower rows to be the first.
     rows = sorted(block["r"], key=lambda r: r["g"][0]["s"][0])
+    #rows = block["r"]
 
     for row_number, row in enumerate(rows):
         if EXCLUDE_ROWS.get(block_name) and EXCLUDE_ROWS.get(block_name) >= row_number + 1:
