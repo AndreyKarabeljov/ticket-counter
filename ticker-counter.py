@@ -1,4 +1,5 @@
 import requests
+import re
 
 
 EXCLUDE_BLOCKS = {
@@ -25,6 +26,7 @@ data = r.json()
 
 sectors = {
     "STRABAG" : [0, 0],
+    "STRABAG VIP" : [0, 0],
     "Сектор Б": [0, 0],
     "Сектор В": [0, 0],
     "Сектор Г": [0, 0]
@@ -74,7 +76,7 @@ for block in data["blocks"]:
 total_reserved = 0
 total_available = 0
 for sector_name, counts in sorted(sectors.items()):
-    sector_name = "Сектор А" if sector_name == "STRABAG" else sector_name
+    sector_name = "Сектор А" if sector_name == "STRABAG" or sector_name == "STRABAG VIP" else sector_name
     total_reserved += counts[0]
     total_available += counts[1]
     print("{}, Продадени: {}, Свободни: {}, Общо:{}".format(sector_name, counts[0], counts[1], counts[0] + counts[1]))
