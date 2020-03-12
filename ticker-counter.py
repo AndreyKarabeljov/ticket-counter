@@ -83,9 +83,8 @@ for sector_name, counts in sorted(sectors.items()):
     print("{}, Продадени: {}, Свободни: {}, Общо:{}".format(sector_name, counts[0], counts[1], counts[0] + counts[1]))
 
 total = total_reserved + total_available
-print("Общо Продадени: {}({}%), Свободни: {}, Общо:{}".format(
+print("Общо Продадени: {} ({}% от капацитета), Свободни: {}, Общо:{}".format(
     total_reserved,
     math.ceil(total_reserved * 100 / total),
     total_available,
     total))
-
