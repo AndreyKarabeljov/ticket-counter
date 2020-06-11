@@ -7,6 +7,9 @@ from time import sleep
 
 import requests
 
+current_dir = os.path.dirname(os.path.realpath(__file__))
+site_dir = os.path.join(current_dir, "..", "levski")
+
 SECTOR_HTML = """
 <div class="elementor-element elementor-element-c58cad0 elementor-widget elementor-widget-progress"
     data-id="c58cad0" data-element_type="widget"
@@ -112,21 +115,20 @@ def get_data_from_url():
         ('a_ts', '1590686109529'),
         ('a_SystemID', '17'),
         ('a_TDLToken',
-         #token),
-         'AEE2A0652F6B6B6B5F6B6B6B530B8573636B626B9928E0A84D25AD6EE860DD093B39D7D82CC786ABDA345C59C222918D0B28316304BD620ED8B471938162E3AB3F6F771FD72FEC58'),
+         token),
         ('a_PromotionID', '0'),
         ('fun', 'json'),
         ('areaId', '0'),
     )
 
     r = requests.get('https://api.eventim.com/seatmap/api/SeatMapHandler', headers=headers, params=params)
-
     return r.json()
 
 
 def get_data_from_file():
-    with open("/Users/akarabelyov/Library/Preferences/PyCharm2018.3/scratches/scratch.json") as json_file:
+    with open(os.path.join(current_dir, "sample-data.json")) as json_file:
         return json.load(json_file)
+
 
 def get_sector_results():
     def populate_sector(sector_name, available, reserved):
@@ -139,7 +141,7 @@ def get_sector_results():
         sectors[sector_name][0] += reserved
         sectors[sector_name][1] += available
 
-    data = get_data_from_url()
+    data = get_data_from_file()
     sectors = {
         "Скайбокс*": [0, 0],
         "ВИП": [0, 0],
@@ -289,7 +291,7 @@ def get_total_sold(sector_results):
     return sold
 
 def process_html_template(total_reserved, total_available, sector_results):
-    template_file = "/Users/akarabelyov/Downloads/www.levski.com/www.levski.com/levski/template.html"
+    template_file = os.path.join(site_dir, "template.html")
     with open(template_file) as file:
         template = file.readlines()
 
@@ -305,12 +307,12 @@ def process_html_template(total_reserved, total_available, sector_results):
 
     result = update_bindings(template, bindings)
 
-    index_file = "/Users/akarabelyov/Downloads/www.levski.com/www.levski.com/levski/index.html"
+    index_file = os.path.join(site_dir, "index.html")
     with open(index_file, 'w') as file:
         file.writelines(result)
 
 def commit():
-    working_directory = os.path.join(os.sep, "Users", "akarabelyov", "Downloads","www.levski.com","www.levski.com", "levski")
+    working_directory = site_dir
     os.chdir(working_directory)
     proc = subprocess.Popen(["git", "add", "index.html"], stdout=subprocess.PIPE)
     result = [x.decode('utf-8').rstrip('\n') for x in proc.stdout.readlines()]
@@ -330,7 +332,7 @@ def commit():
 def process():
     total_reserved, total_available, sector_results = get_sector_results()
     process_html_template(total_reserved, total_available, sector_results)
-    commit()
+    #commit()
 
 #process()
 for i in range(1, 1000):
