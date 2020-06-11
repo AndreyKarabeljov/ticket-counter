@@ -334,7 +334,7 @@ def process():
     process_html_template(total_reserved, total_available, sector_results)
     commit()
 
-#process()
-for i in range(1, 1000):
-    process()
-    sleep(60 * 10)
+process()
+# for i in range(1, 1000):
+#     process()
+#     sleep(60 * 10)
