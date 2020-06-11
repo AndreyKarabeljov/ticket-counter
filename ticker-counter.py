@@ -332,7 +332,7 @@ def commit():
 def process():
     total_reserved, total_available, sector_results = get_sector_results()
     process_html_template(total_reserved, total_available, sector_results)
-    #commit()
+    commit()
 
 #process()
 for i in range(1, 1000):
