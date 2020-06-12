@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-BASEDIR=$(dirname $0)
+BASEDIR=$(cd `dirname $0` && pwd)
 echo $BASEDIR
 python $BASEDIR/ticket-counter.py
