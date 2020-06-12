@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 DIR="$(dirname "$(readlink -f "$0")")"
-python $DIR/ticket-counter.py
+python $DIR/ticket-counter.py > ${DIR}/tmp.log
