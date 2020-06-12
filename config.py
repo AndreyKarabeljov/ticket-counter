@@ -1,0 +1,9 @@
+publish=1
+times=0
+sleep_time=10
+eventim_url="https://www.eventim.bg/bg/bileti/levski-ludogorec-sofia-vivacom-arena-georgi-asparuhov-1192163/performance.html"
+load_data_from_file=1
+title="Левски-Лудогорец"
+subtitle="5.06 21:00"
+link_url=eventim_url
+link_image="ttps://www.all4levski.com/wp-content/uploads/DuFMR.png"
