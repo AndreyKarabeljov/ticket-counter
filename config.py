@@ -1,4 +1,4 @@
-publish=0
+publish=1
 times=0
 sleep_time=10
 eventim_url="https://www.eventim.bg/bg/bileti/levski-sofia-lokomotiv-plovdiv-sofia-vivacom-arena-georgi-asparuhov-1201135/performance.html"
