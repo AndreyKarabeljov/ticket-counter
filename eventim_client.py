@@ -26,26 +26,36 @@ EXCLUDE_ROWS = {
     " Блок 17": 18,
     " Блок 18": 18,
     " Блок 19": 1,
+
+
+
 }
 SECTOR_ORDER = [
-    "ВИП",
-    "Скайбокс*",
+    #"ВИП",
+    #"Скайбокс*",
     "Сектор А",
     "Сектор Б",
     "Сектор В",
-    "Сектор Г"
+    #"Сектор Г"
 ]
+
+SECTOR_LIMITED_SIZE = {
+    "Сектор А": 2780,
+    "Сектор Б": 2907,
+    "Сектор В": 1942,
+    "Сектор Г": 1250
+}
 
 def _get_token():
     url = config.eventim_url
     r = requests.get(url)
     tokenPattern = '''"authToken":"(.*?)"'''
     match = re.search(tokenPattern, r.text)
-    return match.groups(0)
+    return match.groups(0)[0]
 
 
 def _get_data_from_url():
-    token = _get_token()
+    token = config.token if config.token else _get_token()
     print(token)
     headers = {
         'Connection': 'keep-alive',
@@ -62,23 +72,7 @@ def _get_data_from_url():
         'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
     }
 
-    params = (
-        ('smcVersion', 'v5.2'),
-        ('version', 'v5.2.2-1'),
-        ('cType', 'TDLREST'),
-        ('cId', '1101'),
-        ('evId', '1192163'),
-        ('key', ''),
-        ('a_ts', '1590686109529'),
-        ('a_SystemID', '17'),
-        ('a_TDLToken',
-         token),
-        ('a_PromotionID', '0'),
-        ('fun', 'json'),
-        ('areaId', '0'),
-    )
-
-    r = requests.get('https://api.eventim.com/seatmap/api/SeatMapHandler', headers=headers, params=params)
+    r = requests.get("https://api.eventim.com/seatmap/api/SeatMapHandler?smcVersion=v5.2&version=v5.2.2-1&cType=TDLREST&cId=1101&evId={}&key=&a_ts=1592453644002&a_SystemID=17&a_TDLToken={}&a_PromotionID=0&fun=json&areaId=0".format(config.event_id, token), headers=headers)
     return r.json()
 
 
@@ -157,9 +151,11 @@ def get_sector_results():
     sector_results = []
     for sector_name in SECTOR_ORDER:
         counts = sectors[sector_name]
+        total = SECTOR_LIMITED_SIZE.get(sector_name) if SECTOR_LIMITED_SIZE.get(sector_name) else counts[0] + counts[1]
+        counts[0] = total - counts[1]
+
         total_reserved += counts[0]
         total_available += counts[1]
-        total = counts[0] + counts[1]
         print("{}, Продадени: {}, Свободни: {}, Общо:{}".format(sector_name, counts[0], counts[1], total))
         print("{}%".format(int(counts[0] * 100 / (counts[0] + counts[1]))))
 

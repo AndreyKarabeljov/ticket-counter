@@ -129,7 +129,7 @@ def process_html_template(total_reserved, total_available, sector_results):
         template = file.readlines()
 
     bindings = dict()
-    bindings["{{total.all}}"] = str(total_reserved + total_available)
+    bindings["{{total.all}}"] = "{:,.0f}".format(total_reserved + total_available)
     bindings["{{total.income}}"] = "{:,.0f}".format(_get_income(sector_results))
     bindings["{{current.sold}}"] = "{:,.0f}".format(total_reserved)
     bindings["{{total.sold}}"] = "{:,.0f}".format(_get_total_sold(sector_results))
