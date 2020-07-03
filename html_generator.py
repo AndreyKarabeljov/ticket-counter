@@ -20,7 +20,7 @@ SECTOR_HTML = """
             <div class="elementor-progress-bar" data-max="{{t.p}}"
                 style="width: {{t.p}}%;">
                 <span class="elementor-progress-text"></span>
-                <span class="elementor-progress-percentage">{{t.p}}%</span>
+                <span class="elementor-progress-percentage"></span>
             </div>
         </div>
     </div>
@@ -84,13 +84,13 @@ def _process_sector_template(sector_results):
     for r in sector_results:
         if r["total"] == r["sold"]:
             bindings = {
-            "{{t}}": "{}, продадени {} от {}".format(r["name"], r["sold"], r["total"])
+            "{{t}}": "{}, оставащи  {}".format(r["name"], r["available"])
             }
             result = result + (_update_bindings([SOLD_SECTOR_HTML], bindings)[0])
             continue
 
         bindings = {
-            "{{t}}": "{}, продадени {} от {}".format(r["name"], r["sold"], r["total"]),
+            "{{t}}": "{}, оставащи {}".format(r["name"], r["available"]),
             "{{t.p}}": str(int(r["sold"] * 100 / r["total"]))
         }
         result = result + (_update_bindings([SECTOR_HTML], bindings)[0])
