@@ -11,9 +11,9 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 
 SPECIAL_TICKETS = "БЪДИ С ОТБОРА!"
 EXCLUDE_BLOCKS = {
-    # " Блок 20",
-    # " Блок 20.",
-    # " Блок 23",
+    " Блок 20",
+    " Блок 20.",
+    " Блок 23",
     # " Блок 7",
     # " Блок 25",
     # " Блок 26",
@@ -21,11 +21,11 @@ EXCLUDE_BLOCKS = {
 
 # Exclude all the rows less or equals to the specified.
 EXCLUDE_ROWS = {
-    # " Блок 15": 1,
-    # " Блок 16": 1,
-    # " Блок 17": 18,
-    # " Блок 18": 18,
-    # " Блок 19": 1,
+    " Блок 15": 1,
+    " Блок 16": 1,
+    " Блок 17": 18,
+    " Блок 18": 18,
+    " Блок 19": 1,
 
 
 
@@ -171,9 +171,7 @@ def get_sector_results():
                 for seat in group:
                     row_id += seat[0]
 
-                    seat_status = availability_map.get(row_id, None)
-                    if seat_status is None:
-                        continue
+                    seat_status = availability_map.get(row_id, 0)
 
                     if seat_status == 1:
                         available += 1
