@@ -1,13 +1,13 @@
 publish=1
-times=30
+times=120
 sleep_time=10
-eventim_url="https://www.eventim.bg/bg/bileti/levski-beroe-sofia-vivacom-arena-georgi-asparuhov-1207207/performance.html"
+eventim_url="https://www.eventim.bg/bg/bileti/levski-arda-sofia-vivacom-arena-georgi-asparuhov-1221275/performance.html"
 load_data_from_file=0
-title="Левски - Берое"
-subtitle="10.08 20:00"
-link_url="https://www.eventim.bg/bg/bileti/levski-beroe-sofia-vivacom-arena-georgi-asparuhov-1207207/performance.html"
-link_image="https://bit.ly/33pGe9F"
+title="Левски - Арда"
+subtitle="05.12 16:30"
+link_url="https://www.eventim.bg/bg/bileti/levski-arda-sofia-vivacom-arena-georgi-asparuhov-1221275/performance.html"
+link_image="https://bit.ly/2VxV7S8"
 
-token="97657EA42F6B6B6B5F6B6B6BF1E1F79D636B626B084D3A225A8F0011C6626014D7772AF17EA272BC6A517C3F9A690E03575AB97FB0AE469348FDFEA2D24AA3E05B49F504D47BD812"
+token="2584E8E82F6B6B6B5F6B6B6B26595C53636B626B0EF32191D2575DE4856B80C75583A839046FD1F6D8F133208E5130C610A2400279C2AAC861AA0EE479FD2CD350F0B5B02FEEF3CF"
 
-event_id=1207207
+event_id=1221275
